@@ -31,17 +31,23 @@ public class BookController2_4 {
         - 기본값은 id 오름차, title은 가나다순, price는 내림차
      */
     @GetMapping
-    public List<Book> list(@RequestParam(defaultValue = "id") String sort) {
+    public Map<String, Object> list(@RequestParam(defaultValue = "id") String sort) {
 //        List<Book> bookList = new ArrayList<>();
 //        for (Long key : bookStore.keySet()) {
 //            bookList.add(bookStore.get(key));
 //        }
 
-        return new ArrayList<>(bookStore.values())
+        List<Book> bookList = new ArrayList<>(bookStore.values())
                 .stream()
                 .sorted(getComparator(sort))
-                .collect(Collectors.toList())
-                ;
+                .collect(Collectors.toList());
+
+        int count = bookStore.size();
+
+        return Map.of(
+                "count", count,
+                "bookList", bookList
+        );
 
     }
 
@@ -114,5 +120,11 @@ public class BookController2_4 {
         foundBook.updateBookInfo(title, author, price);
 
         return "도서 수정 완료: id - " + id;
+    }
+
+    // 책이 몇권 저장됐는지 알려주기
+    @GetMapping("/count")
+    public String count() {
+        return "현재 저장된 도서의 개수: " + bookStore.size() + "권";
     }
 }
