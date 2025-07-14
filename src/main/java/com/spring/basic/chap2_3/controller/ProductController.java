@@ -2,10 +2,7 @@ package com.spring.basic.chap2_3.controller;
 
 import com.spring.basic.chap2_3.entity.Product;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -36,7 +33,7 @@ public class ProductController {
 //        return productMap.get(Long.parseLong(id));
 //    }
 
-    // 쿼리스트링 읽기   ?id=xxx&price=4000
+    // 쿼리스트링 읽기  /products?id=xxx&price=4000
     @GetMapping
     public Product getProduct(
             @RequestParam("id") long id,
@@ -46,4 +43,11 @@ public class ProductController {
         System.out.println("price = " + price);
         return productMap.get(id);
     }
+
+    // localhost:9000/products/1    -> 1번 상품 조회
+    @GetMapping("/{id}")
+    public Product getProduct(@PathVariable long id) {
+        return productMap.get(id);
+    }
+
 }
