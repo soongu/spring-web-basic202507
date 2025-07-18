@@ -51,4 +51,14 @@ public class FeedRepository {
         feedStore.put(feed.getFeedId(), feed);
     }
 
+    // 데이터 삭제 로직
+    public void deleteById(Long id) {
+        feedStore.remove(id);
+    }
+
+    // 데이터 개별 조회 로직
+    public Feed findById(Long id) {
+        return feedStore.get(id);
+    }
+
 }
