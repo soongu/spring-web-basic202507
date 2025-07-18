@@ -44,11 +44,14 @@ public class FeedService {
         }
     }
 
+    // 개별조회 요청에 대한 중간처리
     public FeedDetailResponse findOneProcess(Long id) {
-        return null;
+
+        Feed feed = feedRepository.findById(id);
+
+        return FeedDetailResponse.from(feed);
     }
 
 
-    // 개별조회 요청에 대한 중간처리
 
 }
